@@ -1,0 +1,39 @@
+{
+  "students": [
+    {
+      "id": "1",
+      "name": "João Silva",
+      "belt": "Roxa"
+    },
+    {
+      "id": "2",
+      "name": "Maria Santos",
+      "belt": "Azul"
+    },
+    {
+      "id": "3",
+      "name": "Carlos Oliveira",
+      "belt": "Roxa"
+    },
+    {
+      "id": "4",
+      "name": "Ana Rodrigues",
+      "belt": "Marrom"
+    },
+    {
+      "id": "5",
+      "name": "Pedro Almeida",
+      "belt": "Preta"
+    },
+    {
+      "id": "cfc3",
+      "name": "Lucas Gomes",
+      "belt": "Branca"
+    },
+    {
+      "id": "a2f4",
+      "name": "Andressa",
+      "belt": "Preta"
+    }
+  ]
+}
