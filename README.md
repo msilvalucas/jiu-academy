@@ -1,51 +1,32 @@
-# React + TypeScript + Vite
+# Academia de Jiu-Jitsu - Sistema de Gerenciamento
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Sobre o Projeto
 
-Currently, two official plugins are available:
+Este sistema de gerenciamento para uma academia de Jiu-Jitsu foi desenvolvido como parte de um desafio de mentoria. O objetivo principal é criar uma aplicação web simples e eficiente para ajudar na gestão dos alunos, permitindo o cadastro, listagem e graduação dos praticantes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Funcionalidades
 
-## Expanding the ESLint configuration
+1. **Listagem de Alunos:**
+   - Exibe uma tabela com nome e faixa atual de cada aluno
+   - Permite filtrar alunos por nome ou faixa
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. **Cadastro de Alunos:**
+   - Formulário para adicionar novos alunos
+   - Campos: Nome e Faixa inicial
 
-- Configure the top-level `parserOptions` property like this:
+3. **Graduação de Alunos:**
+   - Permite atualizar a faixa de um aluno existente
+   - Confirmação antes da mudança de faixa
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+4. **Interface Responsiva:**
+   - Design adaptável para diferentes tamanhos de tela
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Tecnologias Utilizadas
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# jiu-academy
+- **React 18:** Biblioteca JavaScript para construção de interfaces
+- **TypeScript:** Superset tipado de JavaScript
+- **Vite:** Build tool e dev server
+- **React Router v6:** Para gerenciamento de rotas
+- **React Bootstrap:** Framework CSS para estilização
+- **Axios:** Cliente HTTP para requisições à API
+- **JSON Server:** Simula uma API RESTful para desenvolvimento
