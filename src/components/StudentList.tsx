@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Student } from '../types';
-import { getStudents } from '../services/api';
+import { getStudents, updateStudentBelt } from '../services/api';
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [filter, setFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const belts = ['Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'];
+
+  const getIndexBelt = (belt: string): number => {
+    return belts.indexOf(belt);
+  };
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -33,6 +40,27 @@ const StudentList: React.FC = () => {
     );
     setFilteredStudents(filtered);
   }, [filter, students]);
+
+  const handleGraduation = async (id: string, newBelt: string) => {
+    try {
+      setIsSubmitting(true);
+      await updateStudentBelt(id.toString(), newBelt);
+
+      setStudents((prevStudents) =>
+        prevStudents.map((student) =>
+          student.id === id
+            ? student.belt === 'Preta'
+              ? student
+              : { ...student, belt: newBelt }
+            : student,
+        ),
+      );
+    } catch (error) {
+      console.error('Error updating student belt:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (isLoading) {
     return <div>Carregando...</div>;
@@ -63,11 +91,38 @@ const StudentList: React.FC = () => {
               <td>{student.name}</td>
               <td>{student.belt}</td>
               <td>
-                <Link to={`/graduacao/${student.id}`}>
+                <div className="d-flex gap-3">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    disabled={isSubmitting}
+                    onClick={() =>
+                      handleGraduation(
+                        student.id,
+                        belts[getIndexBelt(student.belt) + 1],
+                      )
+                    }
+                  >
+                    {student.belt === 'Preta'
+                      ? 'Graduação máxima'
+                      : 'Promover para:' +
+                        belts[getIndexBelt(student.belt) + 1]}
+                  </Button>
+
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() => console.log('Despromover')}
+                    disabled={isSubmitting}
+                  >
+                    Despromover para: {belts[getIndexBelt(student.belt) - 1]}
+                  </Button>
+                  {/* <Link to={`/graduacao/${student.id}`}>
                   <Button variant="primary" size="sm">
                     Graduar
                   </Button>
-                </Link>
+                </Link> */}
+                </div>
               </td>
             </tr>
           ))}
