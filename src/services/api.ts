@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Student } from '../types';
+import { Student, Belt } from '../types';
 
 const API_URL = 'http://localhost:3000';
 
@@ -9,6 +9,11 @@ const api = axios.create({
 
 export const getStudents = async (): Promise<Student[]> => {
   const response = await api.get<Student[]>('/students');
+  return response.data;
+};
+
+export const getBelts = async (): Promise<Belt[]> => {
+  const response = await api.get<Belt[]>('/belts');
   return response.data;
 };
 
