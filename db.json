@@ -35,5 +35,12 @@
       "name": "Andressa",
       "belt": "Preta"
     }
+  ],
+  "belts": [
+    { "id": 1, "belt": "Branca" },
+    { "id": 2, "belt": "Azul" },
+    { "id": 3, "belt": "Roxa" },
+    { "id": 4, "belt": "Marrom" },
+    { "id": 5, "belt": "Preta" }
   ]
 }
