@@ -1,45 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
-import { Student } from '../types';
-import { getStudents, updateStudentBelt } from '../services/api';
+import { Link } from 'react-router-dom';
+import { Belt, Student } from '../types';
+import { getBelts, getStudents, updateStudentBelt } from '../services/api';
 
 const StudentList: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
+  const [belts, setBelts] = useState<Belt[]>([]);
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [filter, setFilter] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const belts = ['Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'];
-
   const getIndexBelt = (belt: string): number => {
-    return belts.indexOf(belt);
+    return belts.findIndex((beltItem) => beltItem.belt === belt);
   };
-
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const data = await getStudents();
-        setStudents(data);
-        setFilteredStudents(data);
-      } catch (error) {
-        console.error('Erro ao buscar alunos', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchStudents();
-  }, []);
-
-  useEffect(() => {
-    const filtered = students.filter(
-      (student) =>
-        student.name.toLowerCase().includes(filter.toLowerCase()) ||
-        student.belt.toLowerCase().includes(filter.toLowerCase()),
-    );
-    setFilteredStudents(filtered);
-  }, [filter, students]);
 
   const handleGraduation = async (id: string, newBelt: string) => {
     try {
@@ -61,6 +36,43 @@ const StudentList: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const data = await getStudents();
+        setStudents(data);
+        setFilteredStudents(data);
+      } catch (error) {
+        console.error('Erro ao buscar alunos', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchStudents();
+  }, []);
+
+  useEffect(() => {
+    const fetchBelts = async () => {
+      try {
+        const data = await getBelts();
+        setBelts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchBelts();
+  }, []);
+
+  useEffect(() => {
+    const filtered = students.filter(
+      (student) =>
+        student.name.toLowerCase().includes(filter.toLowerCase()) ||
+        student.belt.toLowerCase().includes(filter.toLowerCase()),
+    );
+    setFilteredStudents(filtered);
+  }, [filter, students]);
 
   if (isLoading) {
     return <div>Carregando...</div>;
@@ -99,7 +111,7 @@ const StudentList: React.FC = () => {
                     onClick={() =>
                       handleGraduation(
                         student.id,
-                        belts[getIndexBelt(student.belt) + 1],
+                        belts[getIndexBelt(student.belt)]?.belt,
                       )
                     }
                   >
@@ -115,13 +127,14 @@ const StudentList: React.FC = () => {
                     onClick={() => console.log('Despromover')}
                     disabled={isSubmitting}
                   >
-                    Despromover para: {belts[getIndexBelt(student.belt) - 1]}
+                    Despromover para:{' '}
+                    {belts[getIndexBelt(student.belt) - 1]?.belt}
                   </Button>
-                  {/* <Link to={`/graduacao/${student.id}`}>
-                  <Button variant="primary" size="sm">
-                    Graduar
-                  </Button>
-                </Link> */}
+                  <Link to={`/graduacao/${student.id}`}>
+                    <Button variant="primary" size="sm">
+                      Graduar
+                    </Button>
+                  </Link>
                 </div>
               </td>
             </tr>
