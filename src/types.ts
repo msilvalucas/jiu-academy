@@ -3,3 +3,8 @@ export interface Student {
   name: string;
   belt: string;
 }
+
+export interface Belt {
+  id: string;
+  belt: string;
+}
